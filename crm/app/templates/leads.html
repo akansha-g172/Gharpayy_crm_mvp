@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads Management - Gharpayy CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Gharpayy CRM</h1>
+            <div class="space-x-4">
+                <a href="/" class="hover:text-blue-200">Home</a>
+                <a href="/capture" class="hover:text-blue-200">Capture Lead</a>
+                <a href="/leads" class="hover:text-blue-200">Leads</a>
+                <a href="/dashboard" class="hover:text-blue-200">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto mt-8 p-6">
+        <h2 class="text-3xl font-bold mb-6">Leads Management</h2>
+        
+        <div class="mb-4 flex gap-2">
+            <input type="text" id="searchBox" placeholder="Search by name or phone..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+            <table class="w-full">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-3 text-left">ID</th>
+                        <th class="px-4 py-3 text-left">Name</th>
+                        <th class="px-4 py-3 text-left">Phone</th>
+                        <th class="px-4 py-3 text-left">Source</th>
+                        <th class="px-4 py-3 text-left">Agent ID</th>
+                        <th class="px-4 py-3 text-left">Status</th>
+                        <th class="px-4 py-3 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsTable" class="divide-y">
+                    <!-- Rows will be populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div id="statusModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg max-w-md">
+            <h3 class="text-xl font-bold mb-4">Update Lead Status</h3>
+            <select id="statusSelect" class="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4">
+                <option value="New Lead">New Lead</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Requirement Collected">Requirement Collected</option>
+                <option value="Property Suggested">Property Suggested</option>
+                <option value="Visit Scheduled">Visit Scheduled</option>
+                <option value="Visit Completed">Visit Completed</option>
+                <option value="Booked">Booked</option>
+                <option value="Lost">Lost</option>
+            </select>
+            <div class="flex gap-2">
+                <button id="confirmStatus" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Update</button>
+                <button id="cancelStatus" class="flex-1 bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLeadId = null;
+        let allLeads = [];
+
+        async function loadLeads() {
+            try {
+                const res = await fetch('/api/leads/');
+                allLeads = await res.json();
+                displayLeads(allLeads);
+            } catch (error) {
+                console.error('Error loading leads:', error);
+            }
+        }
+
+        function displayLeads(leads) {
+            const table = document.getElementById('leadsTable');
+            table.innerHTML = '';
+            
+            leads.forEach(lead => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-4 py-3">${lead.id}</td>
+                    <td class="px-4 py-3">${lead.name}</td>
+                    <td class="px-4 py-3">${lead.phone}</td>
+                    <td class="px-4 py-3">${lead.source || '-'}</td>
+                    <td class="px-4 py-3">${lead.assigned_agent_id || '-'}</td>
+                    <td class="px-4 py-3">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(lead.status)}">
+                            ${lead.status}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <button onclick="openStatusModal(${lead.id})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+                            Change Status
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        function getStatusBadge(status) {
+            const colors = {
+                'New Lead': 'bg-blue-100 text-blue-800',
+                'Contacted': 'bg-yellow-100 text-yellow-800',
+                'Requirement Collected': 'bg-purple-100 text-purple-800',
+                'Property Suggested': 'bg-indigo-100 text-indigo-800',
+                'Visit Scheduled': 'bg-orange-100 text-orange-800',
+                'Visit Completed': 'bg-green-100 text-green-800',
+                'Booked': 'bg-green-600 text-white',
+                'Lost': 'bg-red-100 text-red-800',
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function openStatusModal(leadId) {
+            currentLeadId = leadId;
+            document.getElementById('statusModal').classList.remove('hidden');
+        }
+
+        document.getElementById('cancelStatus').addEventListener('click', () => {
+            document.getElementById('statusModal').classList.add('hidden');
+        });
+
+        document.getElementById('confirmStatus').addEventListener('click', async () => {
+            const newStatus = document.getElementById('statusSelect').value;
+            try {
+                const res = await fetch(`/api/leads/${currentLeadId}/stage?status=${encodeURIComponent(newStatus)}`, {
+                    method: 'PATCH'
+                });
+                if (res.ok) {
+                    document.getElementById('statusModal').classList.add('hidden');
+                    loadLeads();
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+            }
+        });
+
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allLeads.filter(lead => 
+                lead.name.toLowerCase().includes(query) || 
+                lead.phone.includes(query)
+            );
+            displayLeads(filtered);
+        });
+
+        loadLeads();
+        setInterval(loadLeads, 30000); // Refresh every 30 seconds
+    </script>
+</body>
+</html>

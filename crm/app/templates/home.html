@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gharpayy CRM - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Gharpayy CRM</h1>
+            <div class="space-x-4">
+                <a href="/" class="hover:text-blue-200 transition font-semibold">Home</a>
+                <a href="/capture" class="hover:text-blue-200 transition">Capture Lead</a>
+                <a href="/leads" class="hover:text-blue-200 transition">Leads</a>
+                <a href="/visits" class="hover:text-blue-200 transition">Visits</a>
+                <a href="/dashboard" class="hover:text-blue-200 transition">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto mt-12 px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-5xl font-bold text-gray-800 mb-4">Welcome to Gharpayy CRM</h2>
+            <p class="text-xl text-gray-600">Lead Management System for PG Accommodations</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Capture Lead Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:scale-105">
+                <div class="bg-blue-500 h-24 flex items-center justify-center">
+                    <span class="text-4xl">📝</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Capture Lead</h3>
+                    <p class="text-gray-600 mb-4">Add new leads with automatic agent assignment and status tracking.</p>
+                    <a href="/capture" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                        Go to Capture →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Manage Leads Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:scale-105">
+                <div class="bg-green-500 h-24 flex items-center justify-center">
+                    <span class="text-4xl">📊</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Manage Leads</h3>
+                    <p class="text-gray-600 mb-4">View all leads, search by name/phone, and move through 8-stage pipeline.</p>
+                    <a href="/leads" class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
+                        Go to Leads →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Schedule Visits Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:scale-105">
+                <div class="bg-orange-500 h-24 flex items-center justify-center">
+                    <span class="text-4xl">📅</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Schedule Visits</h3>
+                    <p class="text-gray-600 mb-4">Schedule property visits, set times, and track visit outcomes.</p>
+                    <a href="/visits" class="inline-block bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+                        Go to Visits →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dashboard Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:scale-105">
+                <div class="bg-purple-500 h-24 flex items-center justify-center">
+                    <span class="text-4xl">📈</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Dashboard</h3>
+                    <p class="text-gray-600 mb-4">View analytics, pipeline stages, and follow-up reminders in real-time.</p>
+                    <a href="/dashboard" class="inline-block bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition">
+                        Go to Dashboard →
+                    </a>
+                </div>
+            </div>
+
+            <!-- API Docs Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:scale-105">
+                <div class="bg-red-500 h-24 flex items-center justify-center">
+                    <span class="text-4xl">🔌</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">API Documentation</h3>
+                    <p class="text-gray-600 mb-4">Access interactive API documentation and test endpoints.</p>
+                    <a href="/docs" class="inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                        Open Docs →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:scale-105">
+                <div class="bg-yellow-500 h-24 flex items-center justify-center">
+                    <span class="text-4xl">⭐</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Features</h3>
+                    <p class="text-gray-600 mb-4">Learn about all features and capabilities of the CRM system.</p>
+                    <button onclick="showFeatures()" class="inline-block bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">
+                        View Features →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-12">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Key Features</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-bold text-blue-600 mb-2">✓ Lead Capture</h4>
+                    <p class="text-gray-600">Automatically capture leads from form submissions with auto-assigned agents and status tracking.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-blue-600 mb-2">✓ Agent Assignment</h4>
+                    <p class="text-gray-600">Round-robin automatic assignment ensures fair distribution of leads across team members.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-blue-600 mb-2">✓ 8-Stage Pipeline</h4>
+                    <p class="text-gray-600">Track leads through New Lead → Booked with visual status indicators and easy stage transitions.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-blue-600 mb-2">✓ Visit Scheduling</h4>
+                    <p class="text-gray-600">Schedule property visits with date/time pickers and outcome tracking (Booked, Considering, Not Interested).</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-blue-600 mb-2">✓ Follow-up Reminders</h4>
+                    <p class="text-gray-600">Automatic detection of inactive leads with bulk reminder sending for timely follow-ups.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-blue-600 mb-2">✓ Real-time Dashboard</h4>
+                    <p class="text-gray-600">View comprehensive analytics: lead counts, pipeline breakdown, visits, and bookings with auto-refresh.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-12">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Quick Stats</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-blue-600" id="totalLeads">-</div>
+                    <p class="text-gray-600 mt-2">Total Leads</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-green-600" id="visitsScheduled">-</div>
+                    <p class="text-gray-600 mt-2">Visits Scheduled</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600" id="bookingsConfirmed">-</div>
+                    <p class="text-gray-600 mt-2">Bookings Confirmed</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-red-600" id="inactiveLeads">-</div>
+                    <p class="text-gray-600 mt-2">Inactive (>24h)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-600 py-8 border-t">
+            <p>Gharpayy CRM MVP - Lead Management for PG Accommodations</p>
+            <p class="text-sm mt-2">Powered by FastAPI, PostgreSQL, and React</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load quick stats
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/dashboard/');
+                const data = await res.json();
+                document.getElementById('totalLeads').textContent = data.total_leads;
+                document.getElementById('visitsScheduled').textContent = data.visits_scheduled;
+                document.getElementById('bookingsConfirmed').textContent = data.bookings_confirmed;
+                
+                const res2 = await fetch('/api/reminders/inactive');
+                const data2 = await res2.json();
+                document.getElementById('inactiveLeads').textContent = data2.count;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        function showFeatures() {
+            alert('✓ Lead Capture - Auto-assign agents\n✓ 8-Stage Pipeline - New Lead → Booked\n✓ Visit Scheduling - Date/Time selection\n✓ Follow-up Reminders - Inactive lead alerts\n✓ Real-time Dashboard - Live analytics\n✓ Search & Filter - Find leads quickly');
+        }
+
+        loadStats();
+        // Refresh stats every 30 seconds
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
