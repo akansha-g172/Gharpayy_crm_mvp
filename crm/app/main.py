@@ -12,7 +12,16 @@ app = FastAPI(title="Gharpayy CRM")
 Base.metadata.create_all(bind=engine)
 
 # mount templates and static if any
-templates = Jinja2Templates(directory="app/templates")
+import os
+from fastapi import Request
+
+# compute absolute path for templates directory so UI routes work regardless of
+# the current working directory.  On Railway the process may start outside of
+# the crm folder which caused earlier 500 errors when using relative paths.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # include routers
 app.include_router(leads.router)
@@ -30,37 +39,32 @@ def startup():
         db.close()
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
-def root():
+def root(request: Request):
     """Home page with navigation and quick stats."""
-    with open("app/templates/home.html") as f:
-        return HTMLResponse(f.read())
+    # render via Jinja2 so template inheritance or path resolution is consistent
+    return templates.TemplateResponse("home.html", {"request": request})
 
 @app.get("/ui/dashboard", response_class=HTMLResponse)
-def dashboard_ui_old():
+def dashboard_ui_old(request: Request):
     # serve the simple frontend dashboard
-    with open("app/templates/dashboard.html") as f:
-        return HTMLResponse(f.read())
+    return templates.TemplateResponse("dashboard.html", {"request": request})
 
 @app.get("/dashboard", response_class=HTMLResponse)
-def dashboard_ui():
+def dashboard_ui(request: Request):
     # serve the simple frontend dashboard
-    with open("app/templates/dashboard.html") as f:
-        return HTMLResponse(f.read())
+    return templates.TemplateResponse("dashboard.html", {"request": request})
 
 @app.get("/capture", response_class=HTMLResponse)
-def lead_capture_ui():
+def lead_capture_ui(request: Request):
     """Lead capture form page."""
-    with open("app/templates/capture.html") as f:
-        return HTMLResponse(f.read())
+    return templates.TemplateResponse("capture.html", {"request": request})
 
 @app.get("/leads", response_class=HTMLResponse)
-def leads_ui():
+def leads_ui(request: Request):
     """Leads management page."""
-    with open("app/templates/leads.html") as f:
-        return HTMLResponse(f.read())
+    return templates.TemplateResponse("leads.html", {"request": request})
 
 @app.get("/visits", response_class=HTMLResponse)
-def visits_ui():
+def visits_ui(request: Request):
     """Visit scheduling page."""
-    with open("app/templates/visits.html") as f:
-        return HTMLResponse(f.read())
+    return templates.TemplateResponse("visits.html", {"request": request})
