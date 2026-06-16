@@ -3,5 +3,5 @@ uvicorn[standard]
 SQLAlchemy
 psycopg2-binary
 pydantic
-Jinja2
+Jinja2<3.1
 python-multipart
