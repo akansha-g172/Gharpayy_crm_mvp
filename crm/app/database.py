@@ -5,7 +5,7 @@ import os
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://crm_user:password123@localhost:5432/gharpayy"
+    "postgresql://neondb_owner:npg_I4ynOA3dvNQa@ep-holy-cake-aiymvxcv.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require"
 )
 
 engine = create_engine(
