@@ -4,6 +4,11 @@ from fastapi.responses import HTMLResponse
 from .routers import leads, visits, dashboard, reminders
 from .database import engine, Base, SessionLocal
 from .seed import seed_database
+import fastapi
+import starlette
+
+print("FASTAPI:", fastapi.__version__)
+print("STARLETTE:", starlette.__version__)
 app = FastAPI(title="Gharpayy CRM")
 
 # create tables
